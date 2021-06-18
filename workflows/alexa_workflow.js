@@ -1,7 +1,5 @@
 import twilio from 'twilio'
-import SmsDB from '../schemas/SmsDB.js'
-import parseNumber from 'phone'
-import {eventEmitter} from '../index.js'
+import SmsDB from '../schemas/PatientDB.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
