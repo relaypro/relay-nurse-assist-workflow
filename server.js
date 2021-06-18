@@ -57,6 +57,8 @@ function get_patient_info(caller_number) {
 */
 async function send_notification(device_id, wf_id, name, room) {
   let access_token = await get_access_token()
+  console.log(name)
+  console.log(room)
   console.log("IN SEND_NOTIFICATION")
   const params = qs.stringify({
       'subscriber_id': process.env.SUBSCRIBER_ID,
