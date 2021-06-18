@@ -27,8 +27,8 @@ _server.post('/voice', (req, res) => {
   // Use the Twilio Node.js SDK to build an XML response
   console.log(data)
   const twiml = new VoiceResponse()
-  twiml.say({ voice: 'alice' }, `A ${data.nurse_name} will be available shortly ${data.name}.`)
-
+  twiml.say({ voice: 'alice' }, `${data.nurse_name} will be available shortly ${data.name}. Thank you!`)
+  send_notification(data.relay_id, data.relay_wf_id)
   // Render the response as XML in reply to the webhook request
   res.type('text/xml')
   res.send(twiml.toString())
@@ -48,6 +48,64 @@ function get_patient_info(caller_number) {
 
   let data = patientDB[caller_number]
   return data
+}
+
+/*
+* This function initiates the workflow on the specified device_id
+*/
+async function send_notification(device_id, wf_id, name, room) {
+  let access_token = await get_access_token()
+  console.log("IN SEND_NOTIFICATION")
+  const params = qs.stringify({
+      'subscriber_id': process.env.SUBSCRIBER_ID,
+      'user_id': device_id
+  })
+  let relay_wf_id = wf_id 
+  try { 
+      const response = await axios.post(`${ibot_endpoint}${relay_wf_id}?${params}`,
+          {
+              "action": "invoke",
+              "action_args": {
+                  "name": name,
+                  "room": room
+              }
+          },
+          { 
+              headers : {
+                  'Authorization': 'Bearer ' + access_token
+              }
+          })
+      if (response.status == 200) {
+          console.log(`Remote trigger invoked`)
+          console.log(response.statusText)
+      } else {
+          console.log('something wrong happened within send_notification')
+      }
+  } catch (e) {
+      console.error(e)
+  }
+}
+
+/*
+* This function generates an access token to hit the ibot API
+*/
+async function get_access_token() {
+  let response = await axios({
+      method: 'post',
+      headers: {
+          'content-type' : 'application/x-www-form-urlencoded', 
+          'Authorization': `Basic ${process.env.TOKEN}`
+      },
+      url: process.env.OAUTH_ENDPOINT,
+      data: qs.stringify({
+          grant_type: 'password',
+          client_id: process.env.CLIENT_ID,
+          scope: 'openid',
+          username: process.env.TOKEN_USERNAME,
+          password: process.env.TOKEN_PASS
+      }),
+  })
+  return response.data.access_token
 }
 
 
