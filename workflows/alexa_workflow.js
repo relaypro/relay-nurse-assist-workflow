@@ -1,5 +1,5 @@
 import twilio from 'twilio'
-import SmsDB from '../schemas/PatientDB.js'
+import PatientDB from '../schemas/patientDB.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
