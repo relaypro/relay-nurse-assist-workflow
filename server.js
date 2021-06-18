@@ -30,7 +30,7 @@ _server.post('/voice', (req, res) => {
   console.log(data)
   const twiml = new VoiceResponse()
   twiml.say({ voice: 'alice' }, `${data.nurse_name} will be available shortly ${data.name}. Thank you!`)
-  send_notification(data.relay_id, data.relay_wf_id)
+  send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   // Render the response as XML in reply to the webhook request
   res.type('text/xml')
   res.send(twiml.toString())
