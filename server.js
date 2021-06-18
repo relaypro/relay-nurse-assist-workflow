@@ -22,7 +22,7 @@ _server.use(express.json())
 _server.post('/voice', (req, res) => {
   // Get information about the incoming call, like the city associated
   // with the phone number (if Twilio can discover it)
-  const caller_number = request.body.From
+  const caller_number = req.body.From
   let data = get_patient_info(caller_number)
   // Use the Twilio Node.js SDK to build an XML response
   console.log(data)
