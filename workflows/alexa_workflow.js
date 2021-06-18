@@ -14,6 +14,7 @@ const createApp = (relay) => {
     let room
 
     relay.on(`start`, async () => {
+        console.log("does it get here")
         name = await relay.getVar(`name`)
         room = await relay.getVar(`room`)
         text = `${name} is requesting assistance at room ${room}`
