@@ -24,6 +24,8 @@ const createApp = (relay) => {
     relay.on(`button`, async (button, taps) => {
         console.log("button clicked")
         console.log(button)
+        console.log(name)
+        console.log(room)
         if (button.button === `action`) {
             console.log("action button")
             if (button.taps === `single`) {
