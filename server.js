@@ -62,7 +62,7 @@ async function send_notification(device_id, wf_id, name, room) {
       'subscriber_id': process.env.SUBSCRIBER_ID,
       'user_id': device_id
   })
-  let relay_wf_id = wf_id 
+  let relay_wf_id = wf_id
   try { 
       const response = await axios.post(`${ibot_endpoint}${relay_wf_id}?${params}`,
           {
