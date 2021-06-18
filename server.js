@@ -36,7 +36,7 @@ _server.post('/voice', (req, res) => {
 })
 
 function get_patient_info(caller_number) {
-  patientDB = {}
+  let patientDB = {}
   let sample_from_number = process.env.SAMPLE_NUMBER
   patientDB[sample_from_number] = {
     name: "Jon Doe",
