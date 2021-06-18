@@ -12,7 +12,9 @@ const createApp = (relay) => {
     relay.on(`start`, async () => {
         console.log("does it get here")
         name = await relay.getVar(`name`)
+        console.log(name)
         room = await relay.getVar(`room`)
+        console.log(room)
         text = `${name} is requesting assistance at room ${room}`
         await relay.say(text)
         await relay.say(`single tap to hear the request again`)
