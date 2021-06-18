@@ -21,7 +21,7 @@ _server.use(express.json())
 
 // Create a route that will handle Twilio webhook requests, sent as an
 // HTTP POST to /voice in our application
-_server.post('/voice', (req, res) => {
+_server.post('/voice', async (req, res) => {
   // Get information about the incoming call, like the city associated
   // with the phone number (if Twilio can discover it)
   const caller_number = req.body.From
@@ -30,7 +30,7 @@ _server.post('/voice', (req, res) => {
   console.log(data)
   const twiml = new VoiceResponse()
   twiml.say({ voice: 'alice' }, `${data.nurse_name} will be available shortly ${data.name}. Thank you!`)
-  send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
+  await send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   // Render the response as XML in reply to the webhook request
   res.type('text/xml')
   res.send(twiml.toString())
@@ -82,6 +82,7 @@ async function send_notification(device_id, wf_id, name, room) {
       if (response.status == 200) {
           console.log(`Remote trigger invoked`)
           console.log(response.statusText)
+          return response.statusText
       } else {
           console.log('something wrong happened within send_notification')
       }
