@@ -3,10 +3,6 @@ import PatientDB from '../schemas/patientDB.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const accountSid = process.env.TWILIO_ACCOUNT_ID
-const authToken = process.env.TWILIO_AUTH_TOKEN
-const from_number = process.env.TWILIO_NUMBER
-
 const createApp = (relay) => {
     console.log("app is hosted and running")
     let text
