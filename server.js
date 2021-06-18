@@ -23,12 +23,14 @@ _server.post('/voice', (req, res) => {
   const caller_number = request.body.From
   let data = get_patient_info(caller_number)
   // Use the Twilio Node.js SDK to build an XML response
+  console.log(data)
   const twiml = new VoiceResponse()
   twiml.say({ voice: 'alice' }, `A ${data.nurse_name} will be available shortly ${data.name}.`)
 
   // Render the response as XML in reply to the webhook request
   res.type('text/xml')
   res.send(twiml.toString())
+  console.log("done processing")
 })
 
 function get_patient_info(caller_number) {
