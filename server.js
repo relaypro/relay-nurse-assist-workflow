@@ -48,7 +48,7 @@ _server.post('/stall', async  (req, res) => {
     twiml.redirect('/stall')
   }
   if (ack) {
-    twiml.say(`${data.nurse_name} will be coming to assist you shortly!`)
+    twiml.say(`Your nurse will be coming to assist you shortly!`)
   }
   res.type('text/xml')
   res.send(twiml.toString())
