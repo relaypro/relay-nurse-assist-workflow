@@ -16,7 +16,7 @@ How it works: A patient would be able to speak "call my nurse" on the alexa. Thi
 clone the repository: 
 
 ```bash
-git clone https://github.com/relaypro/relay-golf-assist.git
+git clone https://github.com/relaypro/relay-alexa-workflow.git
 ```
 
 Make sure you have NodeJS installed, or download it from [NodeJS](https://nodejs.org/en/download/)
