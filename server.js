@@ -33,8 +33,8 @@ _server.post('/voice', async (req, res) => {
   // Use the Twilio Node.js SDK to build an XML response
   console.log(data)
   const twiml = new VoiceResponse()
-  twiml.say({ voice: 'alice' }, `Your request has been sent to ${data.nurse_name}. Please hold, Thank you!`)
-  await send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
+  twiml.say({ voice: 'alice' }, `Your request has been sent to ${data.nurse_name}. Please hold`)
+  send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   // Render the response as XML in reply to the webhook request
   twiml.redirect('/stall')
   res.type('text/xml')
