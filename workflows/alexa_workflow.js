@@ -1,8 +1,9 @@
 import twilio from 'twilio'
-import PatientDB from '../schemas/patientDB.js'
 import dotenv from 'dotenv'
+import EventEmitter from 'events'
 dotenv.config()
 
+export const eventEmitter = new EventEmitter() 
 const createApp = (relay) => {
     console.log("app is hosted and running")
     let text
@@ -32,6 +33,7 @@ const createApp = (relay) => {
                 await relay.say(text)
             } else if (button.taps === `double`) { 
                 await relay.say("Request acknowledged")
+                eventEmitter.emit(`ack`, `ack`)
                 await relay.terminate()
             }
         }

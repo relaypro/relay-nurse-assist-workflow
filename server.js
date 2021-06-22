@@ -7,11 +7,12 @@ import { fileURLToPath } from 'url'
 import { relay } from '@relaypro/sdk'
 import axios from 'axios'
 import qs from 'qs'
+import {eventEmitter} from './workflows/alexa_workflow.js'
 const VoiceResponse = twilio.twiml.VoiceResponse
 
 /*
 * Express server config
-*/  
+*/
 const port = process.env.PORT || 3000
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const _server = express()
@@ -19,22 +20,42 @@ _server.set('view engine', 'ejs')
 _server.use(express.urlencoded({extended: true}))
 _server.use(express.json())
 
+let ack = false
+
 // Create a route that will handle Twilio webhook requests, sent as an
 // HTTP POST to /voice in our application
 _server.post('/voice', async (req, res) => {
   // Get information about the incoming call, like the city associated
   // with the phone number (if Twilio can discover it)
+  ack = false
   const caller_number = req.body.From
   let data = get_patient_info(caller_number)
   // Use the Twilio Node.js SDK to build an XML response
   console.log(data)
   const twiml = new VoiceResponse()
-  twiml.say({ voice: 'alice' }, `${data.nurse_name} will be available shortly ${data.name}. Thank you!`)
+  twiml.say({ voice: 'alice' }, `Your request has been sent to ${data.nurse_name}. Please hold, Thank you!`)
   await send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   // Render the response as XML in reply to the webhook request
+  twiml.redirect('/stall')
   res.type('text/xml')
   res.send(twiml.toString())
   console.log("done processing")
+})
+
+_server.get('/stall', async  (req, res) => {
+  const twiml = new VoiceResponse()
+  while (!ack) {
+    twiml.redirect('/stall')
+  }
+  if (ack) {
+    twiml.say(`${data.nurse_name} will be coming to assist you shortly!`)
+  }
+  res.type('text/xml')
+  res.send(twiml.toString())
+})
+
+eventEmitter.on(`ack`, async (text) => {
+  ack = true
 })
 
 function get_patient_info(caller_number) {
