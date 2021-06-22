@@ -44,11 +44,10 @@ _server.post('/voice', async (req, res) => {
 
 _server.post('/stall', async  (req, res) => {
   const twiml = new VoiceResponse()
-  while (!ack) {
-    twiml.redirect('/stall')
-  }
   if (ack) {
     twiml.say(`Your nurse will be coming to assist you shortly!`)
+  } else {
+    twiml.redirect('/stall')
   }
   res.type('text/xml')
   res.send(twiml.toString())
