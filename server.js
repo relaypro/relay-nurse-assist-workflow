@@ -34,7 +34,7 @@ _server.post('/voice', async (req, res) => {
   console.log(data)
   const twiml = new VoiceResponse()
   twiml.say(`Your request has been sent to ${data.nurse_name}. Please hold`)
-  sleep(10000)
+  await sleep(10000)
   send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   // Render the response as XML in reply to the webhook request
   twiml.redirect('/stall')
