@@ -34,9 +34,7 @@ _server.post('/voice', async (req, res) => {
   console.log(data)
   const twiml = new VoiceResponse()
   twiml.say(`Your request has been sent to ${data.nurse_name}. Please hold`)
-  twiml.pause({
-    length: 10
-  })
+  sleep(10000)
   send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   // Render the response as XML in reply to the webhook request
   twiml.redirect('/stall')
@@ -59,6 +57,12 @@ _server.post('/stall', async  (req, res) => {
 eventEmitter.on(`ack`, async (text) => {
   ack = true
 })
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}   
 
 function get_patient_info(caller_number) {
   let patientDB = {}
