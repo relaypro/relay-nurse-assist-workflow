@@ -56,7 +56,9 @@ _server.post('/stall', async  (req, res) => {
 })
 
 eventEmitter.on(`ack`, async (text) => {
-  ack = true
+  setTimeout(function () {
+    ack = true
+  }, 5000)
 })
 
 function sleep(ms) {
