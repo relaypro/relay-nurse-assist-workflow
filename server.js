@@ -42,7 +42,7 @@ _server.post('/voice', async (req, res) => {
   console.log("done processing")
 })
 
-_server.get('/stall', async  (req, res) => {
+_server.post('/stall', async  (req, res) => {
   const twiml = new VoiceResponse()
   while (!ack) {
     twiml.redirect('/stall')
