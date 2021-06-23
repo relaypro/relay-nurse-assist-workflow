@@ -33,7 +33,7 @@ _server.post('/voice', async (req, res) => {
   // Use the Twilio Node.js SDK to build an XML response
   console.log(data)
   const twiml = new VoiceResponse()
-  twiml.say(`Your request has been sent to ${data.nurse_name}. Please hold`)
+  twiml.say(`Your request has been sent to your nurse. Please hold`)
   setTimeout(function () {
     send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   }, 7000)
