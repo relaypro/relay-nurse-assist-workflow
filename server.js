@@ -70,7 +70,7 @@ function sleep(ms) {
 function get_patient_info(caller_number) {
   let patientDB = {}
   let sample_from_number = process.env.SAMPLE_NUMBER
-  patientDB[sample_from_number] = {
+  let data = {
     name: "Jon Doe",
     room: "231",
     relay_id: process.env.RELAY_ID,
@@ -78,7 +78,7 @@ function get_patient_info(caller_number) {
     nurse_name: "jo jo"
   }
 
-  let data = patientDB[caller_number]
+  //let data = patientDB[caller_number]
   return data
 }
 
