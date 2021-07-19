@@ -1,4 +1,5 @@
-# Relay nurse assist workflow integrated with Alexa
+# Relay nurse assist workflow integrated with smart home devices
+NOTE: this workflow works with ANY smart home assistant with voice calling functionality eg. Google Hub, Amazon Alexa, Apple HomePod ...
 
 The idea behind it: Patients have Alexas. Nurses have Relays. A patient should be able to request assistance from an alexa which would then notify a nurse on their relay.
 
