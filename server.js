@@ -38,7 +38,7 @@ _server.post('/voice', async (req, res) => {
     send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   }, 7000)
   // Render the response as XML in reply to the webhook request
-  //twiml.redirect('/stall')
+  twiml.redirect('/stall')
   res.type('text/xml')
   res.send(twiml.toString())
   console.log("done processing")
@@ -49,7 +49,7 @@ _server.post('/stall', async  (req, res) => {
   if (ack) {
     twiml.say(`Your nurse will be coming to assist you shortly! Thank You!`)
   } else {
-    //twiml.redirect('/stall')
+    twiml.redirect('/stall')
   }
   res.type('text/xml')
   res.send(twiml.toString())
