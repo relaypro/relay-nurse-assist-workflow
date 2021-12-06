@@ -38,7 +38,7 @@ _server.post('/voice', async (req, res) => {
     send_notification(data.relay_id, data.relay_wf_id, data.name, data.room)
   }, 7000)
   // Render the response as XML in reply to the webhook request
-  twiml.redirect('/stall')
+  //twiml.redirect('/stall')
   res.type('text/xml')
   res.send(twiml.toString())
   console.log("done processing")
@@ -49,7 +49,7 @@ _server.post('/stall', async  (req, res) => {
   if (ack) {
     twiml.say(`Your nurse will be coming to assist you shortly! Thank You!`)
   } else {
-    twiml.redirect('/stall')
+    //twiml.redirect('/stall')
   }
   res.type('text/xml')
   res.send(twiml.toString())
@@ -86,6 +86,7 @@ function get_patient_info(caller_number) {
 * This function initiates the workflow on the specified device_id
 */
 async function send_notification(device_id, wf_id, name, room) {
+  console.log("IN SEND NOTIF")
   let access_token = await get_access_token()
   console.log(name)
   console.log(room)
